@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net7</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>BlazorApp.Client</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\bg-BG.yml" />
+		<None Remove="Resources\de.yml" />
+		<None Remove="Resources\en-US.yml" />
+		<None Remove="Resources\es-AR.yml" />
+		<None Remove="Resources\fr.yml" />
+		<None Remove="Resources\hu-HU.yml" />
+		<None Remove="Resources\ja-JP.yml" />
+		<None Remove="Resources\nl.yml" />
+		<None Remove="Resources\tr.yml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\bg-BG.yml" />
+		<EmbeddedResource Include="Resources\de.yml" />
+		<EmbeddedResource Include="Resources\en-US.yml" />
+		<EmbeddedResource Include="Resources\es-AR.yml" />
+		<EmbeddedResource Include="Resources\fr.yml" />
+		<EmbeddedResource Include="Resources\hu-HU.yml" />
+		<EmbeddedResource Include="Resources\ja-JP.yml" />
+		<EmbeddedResource Include="Resources\nl.yml" />
+		<EmbeddedResource Include="Resources\tr.yml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+		<None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
+		<None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+		<None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
+		<None Include="wwwroot\css\open-iconic\README.md" />
+		<None Include="wwwroot\css\style.css.map" />
+		<None Include="wwwroot\css\style.min.css.map" />
+		<None Include="wwwroot\fonts\materialdesignicons-webfont.svg" />
+		<None Include="wwwroot\fonts\materialdesignicons-webfont.woff2" />
+		<None Include="wwwroot\images\bg-auth.png" />
+		<None Include="wwwroot\images\bg-cta01.jpg" />
+		<None Include="wwwroot\images\bg-cta02.jpg" />
+		<None Include="wwwroot\images\bg.jpg" />
+		<None Include="wwwroot\images\blog\bg-blog.jpg" />
+		<None Include="wwwroot\images\blog\blog-01.jpg" />
+		<None Include="wwwroot\images\blog\blog-02.jpg" />
+		<None Include="wwwroot\images\blog\blog-03.jpg" />
+		<None Include="wwwroot\images\blog\blog-04.jpg" />
+		<None Include="wwwroot\images\blog\blog-05.jpg" />
+		<None Include="wwwroot\images\blog\blog-06.jpg" />
+		<None Include="wwwroot\images\clients\01.png" />
+		<None Include="wwwroot\images\clients\02.png" />
+		<None Include="wwwroot\images\clients\03.png" />
+		<None Include="wwwroot\images\clients\04.png" />
+		<None Include="wwwroot\images\clients\05.png" />
+		<None Include="wwwroot\images\favicon.ico" />
+		<None Include="wwwroot\images\features.png" />
+		<None Include="wwwroot\images\home\bg-home2.jpg" />
+		<None Include="wwwroot\images\home\bg-home3-1.jpg" />
+		<None Include="wwwroot\images\home\bg-home3-2.jpg" />
+		<None Include="wwwroot\images\home\bg-home3-3.jpg" />
+		<None Include="wwwroot\images\home\bg-home4.jpg" />
+		<None Include="wwwroot\images\home\home-video.mp4" />
+		<None Include="wwwroot\images\home\home1.png" />
+		<None Include="wwwroot\images\home\home5.png" />
+		<None Include="wwwroot\images\logo-dark.png" />
+		<None Include="wwwroot\images\logo-light.png" />
+		<None Include="wwwroot\images\quote.png" />
+		<None Include="wwwroot\images\subscribe.png" />
+		<None Include="wwwroot\images\users\img1.jpg" />
+		<None Include="wwwroot\images\users\img2.jpg" />
+		<None Include="wwwroot\images\users\img3.jpg" />
+		<None Include="wwwroot\images\users\img4.jpg" />
+		<None Include="wwwroot\images\users\img5.jpg" />
+		<None Include="wwwroot\images\users\img6.jpg" />
+		<None Include="wwwroot\images\users\img7.jpg" />
+		<None Include="wwwroot\images\users\img8.jpg" />
+		<None Include="wwwroot\images\work-1.png" />
+		<None Include="wwwroot\images\work-2.png" />
+		<None Include="wwwroot\images\work-3.png" />
+		<None Include="wwwroot\scss\style.scss" />
+		<None Include="wwwroot\scss\_about.scss" />
+		<None Include="wwwroot\scss\_auth.scss" />
+		<None Include="wwwroot\scss\_blog.scss" />
+		<None Include="wwwroot\scss\_components.scss" />
+		<None Include="wwwroot\scss\_contact.scss" />
+		<None Include="wwwroot\scss\_cta.scss" />
+		<None Include="wwwroot\scss\_feature.scss" />
+		<None Include="wwwroot\scss\_footer.scss" />
+		<None Include="wwwroot\scss\_general.scss" />
+		<None Include="wwwroot\scss\_helper.scss" />
+		<None Include="wwwroot\scss\_home.scss" />
+		<None Include="wwwroot\scss\_loader.scss" />
+		<None Include="wwwroot\scss\_menu.scss" />
+		<None Include="wwwroot\scss\_pricing.scss" />
+		<None Include="wwwroot\scss\_process.scss" />
+		<None Include="wwwroot\scss\_switcher.scss" />
+		<None Include="wwwroot\scss\_team.scss" />
+		<None Include="wwwroot\scss\_testimonial.scss" />
+		<None Include="wwwroot\scss\_variables.scss" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AKSoftware.Localization.MultiLanguages" Version="5.8.0" />
+		<PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Components\Modals\" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,287 @@
+﻿@using System.Net.Mail;
+@using System.Net;
+@using BlazorApp.Shared;
+@using static System.Net.WebRequestMethods;
+@using System.Threading.Tasks;
+@using System.Net.Http;
+@using System.Text.Json
+@using System.Globalization;
+@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+@inject ILanguageContainerService languageContainer
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@page "/blog-app"
+
+<nav id="navbar" class="navbar navbar-expand-lg fixed-top sticky">
+    <div class="container">
+        <a class="navbar-brand" href="/"><h2>TECHUPMASTER</h2></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="mdi mdi-menu text-muted"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navbar-navlist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">@languageContainer.Keys["NavbarItem1"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">@languageContainer.Keys["Features"]</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#faq">@languageContainer.Keys["NavbarItem4"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">@languageContainer.Keys["NavbarItem7"]</a>
+
+                </li>
+                
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#blog" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @languageContainer.Keys["SelectLanguage"] <i class="mdi mdi-chevron-down"></i>
+                            </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+                        <li><a class="nav-link @((name.Equals("tr") ? "active" : ""))" href="@NavigationManager.Uri" @onclick='() => SetLanguage("tr")'><i class="flag flag-tr"></i>@languageContainer.Keys["Language1"]</a></li>
+                        <li><a class="nav-link @((name.Equals("en-US") ? "active" : ""))" href="@NavigationManager.Uri" @onclick='() => SetLanguage("en-US")'><i class="flag flag-us"></i>@languageContainer.Keys["Language2"]</a></li>
+                        <li><a class="nav-link @((name.Equals("de") ? "active" : ""))" href="@NavigationManager.Uri" @onclick='() => SetLanguage("de")'><i class="flag flag-de"></i>@languageContainer.Keys["Language3"]</a></li>
+                        <li><a class="nav-link @((name.Equals("nl") ? "active" : ""))" href="@NavigationManager.Uri" @onclick='() => SetLanguage("nl")'><i class="flag flag-nl"></i>@languageContainer.Keys["Language5"]</a></li>
+                        <li><a class="nav-link @((name.Equals("fr") ? "active" : ""))" href="@NavigationManager.Uri" @onclick='() => SetLanguage("fr")'><i class="flag flag-fr"></i>@languageContainer.Keys["Language4"]</a></li>
+                    </ul>
+                        </li>
+                    </ul>
+                    <!--end navbar-nav-->
+            <!--end navbar-nav-->
+            <ul class="list-inline mb-0 ps-lg-4 ms-2">
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-facebook "></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-instagram"></i></a>
+
+                </li>
+            </ul>
+        </div>
+        <!--end collapse-->
+    </div>
+    <!--end container-->
+</nav>
+<section class="bg-blog">
+            <div class="bg-overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center text-white">
+                            <h2 class="text-white fw-light">Blog App<span class="fw-semibold"> latest news</span></h2>
+                            <nav aria-label="breadcrumb" class="mt-3">
+                                <ul class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                    <li class="breadcrumb-item active text-white-50" aria-current="page">Blog App</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end container-->
+        </section>
+        <!-- END HERO -->
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-7">
+                        <!-- Post-->
+                        <article class="post position-relative pb-5">
+                            <div class="date-box rounded-3">
+                                <h6 class="fs-14 mb-0">25-3-2021</h6>
+                            </div>
+                            <div class="post-preview mb-4">
+                                <a href="#"><img src="images/blog/blog-04.jpg" alt="Blog" class="img-fluid rounded-3" /></a>
+                            </div>
+                            <div class="post">
+                                <div class="d-flex align-items-center gap-3">
+                                    <p class="text-muted mb-0"><i class="mdi mdi-comment-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">364</a></p>
+                                    <p class="text-muted mb-0"><i class="mdi mdi-eye-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">56.8 K</a></p>
+                                </div>
+                                <h5 class="my-3"><a href="#" class="primary-link">Neden Mobil Uygulama?</a></h5>
+                                <p class="text-muted">
+                         Her gün elimizden düşmeyen ve gün geçtikçe kullanımı daha çok artan smartphone (akıllı telefon)lar, tabletler gibi cihazlar için özel olarak kodlanmış ve tasarlanmış bir mobil uygulama ile firmanıza olan ilgiyi daha da arttırabilirsiniz. Mobil uygulamaların hayatımıza kattığı kolaylıkları, verdiğimiz yemek, giyim vs. siparişlerinden, şubelere gitmeye gerek kalmadan gerçekleştirdiğimiz banka işlemlerimize kadar artık birçok şeyi pratik şekilde mobil uygulamalardan gerçekleştirebiliyoruz. Günlük hayatın koşuşturmacasında işlerimizi daha kolay halledebiliyor ve gereksiz zaman kayıplarının önüne geçmiş oluyoruz. Müşterileriniz sunduğunuz kolaylıklara bir yenisini daha ekleyerek bağlantılarınızı bir o kadar arttırabilirsiniz. Mobil uygulamanızın kullanıcı dostu bir arayüze sahip olması çok önemlidir. Kullanıcılarınıza sunduğu kullanım kolaylıkları müşteri memnuniyetini artırarak, hem kullanıcı yani müşteri sayınızı arttırabilir hem de markanıza artı bir değer kazandırabilirsiniz. Birçok alanda hayatımızı kolaylaştıran bu mobil uygulamaların sürekli kendini güncellemesi de gerekmektedir. Hangi sistemde çalıştırmak istiyorsanız ona göre doğru şekilde kodlanması gerekmektedir. Yaşanan hataları en aza indirmek için güncel tutup, açıklarını kapatmak gerekir.
+                                </p>
+                                <a href="javascript:void(0)" class="fw-medium text-dark">Read More <i
+                                        class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        <!-- Post end-->
+                        <!-- Post-->
+                        <article class="post position-relative pb-5">
+                            <div class="date-box rounded-3">
+                                <h6 class="fs-14 mb-0">16-11-2021</h6>
+                            </div>
+                            <div class="post-preview mb-4">
+                                <a href="#"><img src="images/blog/blog-05.jpg" alt="Blog" class="img-fluid rounded-3" /></a>
+                            </div>
+                            <div class="post">
+                                <div class="d-flex align-items-center gap-3">
+                                    <p class="text-muted mb-0"><i class="mdi mdi-comment-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">897</a></p>
+                                    <p class="text-muted mb-0"><i class="mdi mdi-eye-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">99.2 K</a></p>
+                                </div>
+                        <h5 class="my-3"><a href="#" class="primary-link">Mobil Uygulama Geliştirme Nasıl Yapılır, Aşamaları Nelerdir?</a></h5>
+                                <p class="text-muted">
+                            Mobil Uygulama Geliştirme Nasıl Yapılır, Aşamaları Nelerdir?Kullanımı günden güne artan ve hayatımızı kolaylaştıran mobil uygulamaları geliştirmek için ilk olarak hedef kitlenizi belirleyin.20 Aralık 2018Günümüzün olmazsa olmazlarından biri olan Mobil Uygulamalar, hayatımızın her alanında, yaşamımızı kolaylaştırıyor. Mobil Uygulama kullanımı günden günde hızlı bir şekilde artıyor. Farklı firmalar kullanıcılarının, müşterilerinin veya çalışanlarının hayatlarını kolaylaştırabilmek için mobil uygulamalar öne sürüyor. E-girişimciler artık sadece e-ticaret ile sınırlı kalmıyorlar. Bunun yerine mobil uygulamalara ağırlık vererek çok daha fazla hedef kitleye ulaşma çabası içerisindeler. Mobil cihaz kullanım sürelerinin artması, kullanıcı yaş aralığının genişlemesi de mobil uygulama geliştirmeye olan ilgiyi arttırıyor. Mobil uygulamalar, yazılımcılar tarafından geliştirilerek sanal marketlerde müşterilerin hizmetine sunulur. Bu uygulamaların kimisi ücretlidir, kimisi ise ücretsiz olarak kullanıma açıktır ancak her halükarda yazılım geliştiricileri bu uygulamalardan para kazanmaktadır.
+                        </p>
+                                <a href="javascript:void(0)" class="fw-medium text-dark">Read More <i
+                                        class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        <!-- Post end-->
+                        <!-- Post-->
+                        <article class="post position-relative pb-5">
+                            <div class="date-box rounded-3">
+                                <h6 class="fs-14 mb-0">05-08-2021</h6>
+                            </div>
+                            <div class="post-preview mb-4">
+                                <a href="#"><img src="images/blog/blog-06.jpg" alt="Blog" class="img-fluid rounded-3" /></a>
+                            </div>
+                            <div class="post">
+                                <div class="d-flex align-items-center gap-3">
+                                    <p class="text-muted mb-0"><i class="mdi mdi-comment-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">447</a></p>
+                                    <p class="text-muted mb-0"><i class="mdi mdi-eye-outline me-1"></i> <a
+                                            href="javascript:void(0)" class="text-muted">68.1 K</a></p>
+                                </div>
+                        <h5 class="my-3"><a href="#" class="primary-link">Mobil Uygulama Geliştirme Aşamaları</a></h5>
+                                <p class="text-muted">
+                            Mobil uygulama geliştirmek için uzun bir süre çalışmış, emek harcamış olabilirsiniz. Yürüttüğünüz başarılı çalışmalar sonucunda hedeflediğiniz doğrultuda bir mobil uygulama geliştirmeniz mümkündür. Ancak mobil uygulamanızı hedef kitlenizle buluşturmadan önce dikkat etmeniz gereken noktalar vardır. Bunlardan bahsedecek olursak:
+                                </p>
+                                <a href="javascript:void(0)" class="fw-medium text-dark">Read More <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        <!-- Post end-->
+                    </div>
+                   </div>
+                <div class="row">
+                    <div class="col-lg-12 mt-sm-0 mt-4">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination text-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link active" href="javascript:void(0)">1</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+            <!-- end container -->
+        </section>
+
+        <!-- START FOOTER -->
+        <footer class="bg-dark section"> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <ul class="list-inline social-list mb-0">
+                                <li class="list-inline-item"><a href="#" class="social-icon footer-link"><i
+                                            class="mdi mdi-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#" class="social-icon footer-link"><i
+                                            class="mdi mdi-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#" class="social-icon footer-link"><i
+                                            class="mdi mdi-linkedin"></i></a></li>
+                                <li class="list-inline-item"><a href="#" class="social-icon footer-link"><i
+                                            class="mdi mdi-google-plus"></i></a></li>
+                            </ul>
+                            <!--end social-->
+                        </div>
+                        <!--end footer-terms-->
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end container-->
+        </footer>
+        <!-- END FOOTER -->
+
+@code {
+    string name = CultureInfo.CurrentCulture.Name;
+    string culture = CultureInfo.CurrentCulture.Name;
+    async Task SetLanguage(string cultureCod)
+    {
+        await localStorage.SetItemAsync("cultureCode", cultureCod);
+        name = await localStorage.GetItemAsync<string>("cultureCode");
+        if (culture == "tr" || culture == "en-US" || culture == "fr" || culture == "nl" || culture == "de")
+        {
+            //string x = culture + "-" + culture.ToUpper();
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(cultureCod));
+            culture = cultureCod;
+            expandSubNav = false;
+            name = cultureCod;
+        }
+        else
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            culture = cultureCod;
+            name = cultureCod;
+            expandSubNav = false;
+        }
+    }
+    private bool expandSubNav;
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JS.InvokeVoidAsync("initSwiper2");
+        if (firstRender)
+        {
+            if (name == "tr" || name == "en-US" || name == "fr" || name == "nl" || name == "de")
+            {
+                languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(name));
+            }
+            else
+            {
+                languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            }
+        }
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        await JS.InvokeVoidAsync("loader");
+        name = await localStorage.GetItemAsync<string>("cultureCode");
+        if (culture == "tr" || culture == "en-US" || culture == "fr" || culture == "nl" || culture == "de")
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(name));
+        }
+        else
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+        }
+        StateHasChanged();
+    }
+}

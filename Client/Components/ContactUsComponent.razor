@@ -1,0 +1,129 @@
+﻿@using BlazorApp.Shared;
+@using System.Net.Mail;
+@inject ILanguageContainerService languageContainer
+@inject HttpClient Http
+@inject IJSRuntime JS
+<section class="section bg-light" id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center mb-5">
+                    <h3>@languageContainer.Keys["ContactUs"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="contact-details mb-4 mb-lg-0">
+                    <p class="mb-3">
+                        <i class="mdi mdi-email-outline align-middle text-muted fs-20 me-2"></i> <span class="fw-medium">info@techupmaster.com</span>
+                    </p>
+                    <p class="mb-3">
+                        <i class="mdi mdi-web align-middle text-muted fs-20 me-2"></i> <span class="fw-medium"><a href="www.techupmaster.com">www.techupmaster.com</a></span>
+                    </p>
+                    <p class="mb-3">
+                        <i class="mdi mdi-hospital-building text-muted fs-20 me-2"></i> <span class="fw-medium">@languageContainer.Keys["WorkingHour"]</span>
+                    </p>
+                    <p class="mb-3">
+                        <i class="mdi mdi-map-marker-outline text-muted fs-20 me-2"></i> <span class="fw-medium">@languageContainer.Keys["Address"]</span>
+                    </p>
+                </div>
+                <!--end contact-details-->
+            </div>
+            <!--end col-->
+            <div class="col-lg-7">
+                <form method="post" onsubmit="return validateForm()" class="contact-form" name="myForm" id="myForm">
+                    <span id="error-msg"></span>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text"><i class="mdi mdi-account-outline"></i></span>
+                                <input @bind = "name" name="name" id="name" type="text" class="form-control"
+                                       placeholder="@languageContainer.Keys["EnterYourName"]*">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text"><i class="mdi mdi-email-outline"></i></span>
+                                <input @bind="title" name="email" id="email" type="email" class="form-control"
+                                       placeholder="@languageContainer.Keys["EnterYourEmail"]*">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text"><i class="mdi mdi-file-document-outline"></i></span>
+                                <input  name="subject" id="subject" type="text" class="form-control" placeholder="@languageContainer.Keys["Subject"]">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text align-items-start"><i class="mdi mdi-comment-text-outline"></i></span>
+                                <textarea @bind="body" name="comments" id="comments" rows="4" class="form-control" placeholder="@languageContainer.Keys["EnterYourMessage"]*"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-end">
+                            <input id="submit" name="send" class="btn btn-primary" @onclick="AddItem"
+                                   value="@languageContainer.Keys["SendMessage"]">
+                        </div>
+                    </div>
+                </form>
+                <!--end form-->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+
+@code {
+    [Parameter]
+    public string CultureCode { get; set; }
+    [Parameter]
+    public EventCallback OkClick { get; set; }
+    private string? body;
+    private string? title;
+    private string? name;
+
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(CultureCode));
+
+
+    }
+        private async Task AddItem()
+    {
+        if(body != null && title != null && IsValidEmail(title)){
+
+
+            var addItem = new SendMail { Title = title, Body = body, Name = name };
+            await Http.PostAsJsonAsync("api/ProductsGet", addItem);
+            await JS.InvokeAsync<string>("showSuccess", new string[] { languageContainer.Keys["Success"], languageContainer.Keys["SuccessMsg"], languageContainer.Keys["ButtonMsg"] });
+        }
+        else
+        {
+            await JS.InvokeAsync<string>("showError", new string[] { languageContainer.Keys["Error"], languageContainer.Keys["ErrorMsg"], languageContainer.Keys["ButtonMsg"] });
+        }
+
+    }
+    private static bool IsValidEmail(string email)
+    {
+        var valid = true;
+
+        try
+        {
+            var emailAddress = new MailAddress(email);
+        }
+        catch
+        {
+            valid = false;
+        }
+
+        return valid;
+    }
+    
+}

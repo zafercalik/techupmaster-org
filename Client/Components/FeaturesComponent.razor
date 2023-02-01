@@ -1,0 +1,103 @@
+﻿@inject ILanguageContainerService languageContainer
+
+
+<section class="section" id="features">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center mb-5">
+                    <h3>@languageContainer.Keys["ProductFeaturesTitle"]</h3>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box card border-0 mt-3">
+                    <div class="card-body">
+                        <div class="feature-icon mx-auto">
+                            <i class="mdi mdi-chart-areaspline"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h6 class="mb-3 fs-17">@languageContainer.Keys["DigitalDesign"]</h6>
+                            <p class="text-muted">
+                                @languageContainer.Keys["DigitalDesignText"]
+                            </p>
+                        </div>
+                        <div class="feature-link">
+                            <a href="blog-app" class="text-primary text-decoration-underline">
+                                @languageContainer.Keys["LearnMore"]<i class="mdi mdi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end feature-box-->
+            </div>
+            <!--end col-->
+
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box card border-0 mt-3">
+                    <div class="card-body">
+                        <div class="feature-icon mx-auto">
+                            <i class="mdi mdi-xml"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h6 class="mb-3 fs-17">@languageContainer.Keys["StrategySolutions"]</h6>
+                            <p class="text-muted"> @languageContainer.Keys["StrategySolutionsText"]</p>
+                        </div>
+                        <div class="feature-link">
+                            <a href="blog-web" class="text-primary text-decoration-underline">
+                                @languageContainer.Keys["LearnMore"] <i class="mdi mdi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end feature-box-->
+            </div>
+            <!--end col-->
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box card border-0 mt-3">
+                    <div class="card-body">
+                        <div class="feature-icon mx-auto">
+                            <i class="mdi mdi-webpack"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h6 class="mb-3 fs-17">@languageContainer.Keys["AwesomeSupport"]</h6>
+                            <p class="text-muted">
+                                @languageContainer.Keys["AwesomeSupportText"]
+                            </p>
+                        </div>
+                        <div class="feature-link">
+                            <a href="blog-support" class="text-primary text-decoration-underline">
+                                @languageContainer.Keys["LearnMore"] <i class="mdi mdi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end feature-box-->
+            </div>
+            <!--end col-->
+
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+
+@code {
+    [Parameter]
+    public string CultureCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(CultureCode));
+
+
+    }
+}

@@ -1,0 +1,75 @@
+﻿@inject ILanguageContainerService languageContainer
+
+
+<section class="section" id="faq">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center mb-5 pb-2">
+                    <h3>@languageContainer.Keys["FAQTitle"]</h3>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-4 pb-2">
+                    <div class="faq d-flex">
+                        <div class="icon flex-shrink-0 me-3">
+                            ?
+                        </div>
+                        <div class="content">
+                            <h5 class="fs-17">@languageContainer.Keys["FAQ1"]</h5>
+                            <p class="text-muted mb-0">
+                                @languageContainer.Keys["FAQ1Answer"]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 pb-2">
+                    <div class="faq d-flex">
+                        <div class="icon flex-shrink-0 me-3">
+                            ?
+                        </div>
+                        <div class="content">
+                            <h5 class="fs-17">@languageContainer.Keys["FAQ2"]</h5>
+                            <p class="text-muted mb-0">
+                                @languageContainer.Keys["FAQ2Answer"]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end col-->
+            <div class="col-lg-6">
+                <div class="query-form">
+                    <h6 class="fs-18">@languageContainer.Keys["AnyQuestion"]</h6>
+                    <p class="text-muted">@languageContainer.Keys["AnyQuestionText"]</p>
+                    <form action="#">
+                        <div class="input-group">
+                        
+                            <a class="btn btn-primary" href="#contact">@languageContainer.Keys["ContactUs"]</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+
+@code {
+    [Parameter]
+    public string CultureCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(CultureCode));
+
+
+    }
+}

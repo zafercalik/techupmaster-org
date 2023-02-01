@@ -1,0 +1,146 @@
+﻿@inject ILanguageContainerService languageContainer
+
+<section class="section bg-client bg-light" id="client"
+         style="background-image: url('images/bg.jpg');background-size: cover;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="text-center mb-5">
+                    <h3>@languageContainer.Keys["ClientTitle"]</h3>
+                    <p class="text-muted mt-2 mb-0">
+                        @languageContainer.Keys["ClientText"]
+                    </p>
+                </div>
+            </div>
+            <BlazorSlickCarousel>
+                <BlazorSlickCarouselContent>
+                    <div>
+
+                        <div class="swiper-slide">
+                            <div class="testimonial-box text-center card border-0">
+                                <div>
+                                    <div class="testi-img position-relative d-inline-block">
+                                        <img src="images/users/img1.jpg" alt="" class="img-fluid rounded-circle">
+                                        <div class="quote-icon">
+                                            <i class="mdi mdi-format-quote-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <h6 class="mb-0 fs-17">David Strange</h6>
+                                        <p class="text-muted mb-0">Chicago</p>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted mb-0">
+                                        @languageContainer.Keys["Client1Comment"]
+                                    </p>
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end testimonial-box-->
+                        </div>
+                    </div>
+                    <div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-box text-center card border-0">
+                                <div>
+                                    <div class="testi-img position-relative d-inline-block">
+                                        <img src="images/users/img2.jpg" alt="" class="img-fluid rounded-circle">
+                                        <div class="quote-icon">
+                                            <i class="mdi mdi-format-quote-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <h6 class="mb-0 fs-17">John Emmanuel</h6>
+                                        <p class="text-muted mb-0">New Jersey</p>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted mb-0">
+                                        @languageContainer.Keys["Client2Comment"]
+                                    </p>
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end testimonial-box-->
+                        </div>
+                    </div>
+                    <div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-box text-center card border-0">
+                                <div>
+                                    <div class="testi-img position-relative d-inline-block">
+                                        <img src="images/users/img4.jpg" alt="" class="img-fluid rounded-circle">
+                                        <div class="quote-icon">
+                                            <i class="mdi mdi-format-quote-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <h6 class="mb-0 fs-17">Charlize Theron</h6>
+                                        <p class="text-muted mb-0">Washington</p>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted mb-0">
+                                        @languageContainer.Keys["Client3Comment"]
+                                    </p>
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end testimonial-box-->
+                        </div>
+                    </div>
+                </BlazorSlickCarouselContent>
+                <BlazorSlickCarouselLoading>
+                    <p>Loading...</p>
+                </BlazorSlickCarouselLoading>
+            </BlazorSlickCarousel>
+        </div>
+        <!--end col-->
+        <div class="row row-cols-md-5 row-cols-1 mt-4">
+            <div class="col">
+                <div class="client-images text-center mt-4">
+                    <img src="images/clients/01.png" alt="img1" class="img-fluid">
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col">
+                <div class="client-images text-center mt-4">
+                    <img src="images/clients/02.png" alt="img2" class="img-fluid">
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col">
+                <div class="client-images text-center mt-4">
+                    <img src="images/clients/03.png" alt="img3" class="img-fluid">
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col">
+                <div class="client-images text-center mt-4">
+                    <img src="images/clients/04.png" alt="img4" class="img-fluid">
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col">
+                <div class="client-images text-center mt-4">
+                    <img src="images/clients/05.png" alt="img5" class="img-fluid">
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+@code {
+    [Parameter]
+    public string CultureCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(CultureCode));
+
+
+    }
+}

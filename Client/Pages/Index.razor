@@ -1,0 +1,207 @@
+@page "/"
+@using System.Net.Mail;
+@using System.Net;
+@using BlazorApp.Shared;
+@using static System.Net.WebRequestMethods;
+@using System.Threading.Tasks;
+@using System.Net.Http;
+@using System.Text.Json
+@using System.Globalization;
+@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+@inject ILanguageContainerService languageContainer
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+
+
+<PageTitle>Techupmaster</PageTitle>
+
+<nav id="navbar" class="navbar navbar-expand-lg fixed-top sticky">
+    <div class="container">
+        <a class="navbar-brand" href="/"><h2>TECHUPMASTER</h2></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="mdi mdi-menu text-muted"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navbar-navlist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">@languageContainer.Keys["NavbarItem1"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">@languageContainer.Keys["ProductFeaturesTitle"]</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#faq">@languageContainer.Keys["NavbarItem4"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">@languageContainer.Keys["NavbarItem7"]</a>              
+                    
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @languageContainer.Keys["SelectLanguage"] <i class="mdi mdi-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                       
+                        <li><a class="nav-link @((name.Equals("tr") ? "active" : ""))" href="" @onclick='() => SetLanguage("tr")'><i class="flag flag-tr"></i>@languageContainer.Keys["Language1"]</a></li>
+                        <li><a class="nav-link @((name.Equals("en-US") ? "active" : ""))" href="" @onclick='() => SetLanguage("en-US")'><i class="flag flag-us"></i>@languageContainer.Keys["Language2"]</a></li>
+                        <li><a class="nav-link @((name.Equals("de") ? "active" : ""))" href="" @onclick='() => SetLanguage("de")'><i class="flag flag-de"></i>@languageContainer.Keys["Language3"]</a></li>
+                        <li><a class="nav-link @((name.Equals("nl") ? "active" : ""))" href="" @onclick='() => SetLanguage("nl")'><i class="flag flag-nl"></i>@languageContainer.Keys["Language5"]</a></li>
+                        <li><a class="nav-link @((name.Equals("fr") ? "active" : ""))" href="" @onclick='() => SetLanguage("fr")'><i class="flag flag-fr"></i>@languageContainer.Keys["Language4"]</a></li>
+                    </ul>
+                </li>
+            <!--end navbar-nav-->
+            
+
+            </ul>
+            <!--end navbar-nav-->
+            <ul class="list-inline mb-0 ps-lg-4 ms-2">
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-facebook "></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="primary-link"><i style="font-size: 25px;margin:0 auto" class="mdi mdi-instagram"></i></a>
+                
+                </li>
+            </ul>
+        </div>
+        <!--end collapse-->
+    </div>
+    <!--end container-->
+</nav>
+
+
+<HomeComponent CultureCode="@name" />
+
+
+<!-- START FEATURES -->
+<FeaturesComponent CultureCode="@name" />
+
+<!-- END FEATURES -->
+<!-- START Process -->
+
+<ProcessComponent CultureCode="@name" />
+
+<!-- END Process -->
+<!--start contact-->
+<FAQComponent CultureCode="@name"></FAQComponent>
+
+<ContactUsComponent CultureCode="@name" />
+
+<!--end contact-->
+<!-- START FOOTER -->
+
+<FooterComponent CultureCode="@name" />
+
+
+
+
+<!-- END FOOTER -->
+<!--start subscribe-Modal -->
+<div class="subscribe-modal modal fade" id="subscribe" tabindex="-1" aria-labelledby="subscribeform"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!--end modal-header-->
+            <div class="modal-body text-center pt-0">
+                <img src="images/subscribe.png" alt="subscribe" class="img-fluid" />
+                <h5 class="modal-title mt-2 mb-2" id="subscribeform">@languageContainer.Keys["Subscribe"]</h5>
+                <p class="text-muted mb-4">
+                    Join your hand with us for a better life <br /> and beautiful future.
+                </p>
+                <form action="#">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control border" id="subscribeemail"
+                               placeholder="Enter your email" />
+                        <button class="btn  btn-primary btn-sm" type="submit" id="button-addon2">@languageContainer.Keys["Subscribe"]</button>
+
+                        
+                    </div>
+                </form>
+            </div>
+            <!--end modal-body-->
+        </div>
+        <!--end modal-content-->
+    </div>
+    <!--end modal-dialog-->
+</div>
+<!--end SUBSCRIBE modal-->
+<AnchorNavigation></AnchorNavigation>
+@code {
+    string name = CultureInfo.CurrentCulture.Name;
+    string name2 = "";
+
+    async Task SetLanguage(string cultureCod)
+    {
+        await localStorage.SetItemAsync("cultureCode", cultureCod);
+        name = await localStorage.GetItemAsync<string>("cultureCode");
+
+        if (name == "tr" || name == "en-US" || name == "fr" || name == "nl" || name == "de")
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(cultureCod));
+            expandSubNav = false;
+            name = cultureCod;
+        }
+        else
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            name = cultureCod;
+            expandSubNav = false;
+        }
+    }
+    private bool expandSubNav;
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JS.InvokeVoidAsync("initSwiper2");
+        if(firstRender)
+        {
+            if (name == "tr" || name == "en-US" || name == "fr" || name == "nl" || name == "de")
+            {
+                languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(name));
+            }
+            else
+            {
+                languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            }
+        }
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        await JS.InvokeVoidAsync("loader");
+        name = await localStorage.GetItemAsync<string>("cultureCode");
+        if (name == "tr" || name == "en-US" || name == "fr" || name == "nl" || name == "de")
+        {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(name));
+        }
+        else
+        {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+        }
+        StateHasChanged();
+    }
+
+
+   
+
+
+
+
+   
+
+}

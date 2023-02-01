@@ -1,0 +1,94 @@
+﻿@inject ILanguageContainerService languageContainer
+@inject IJSRuntime JS
+
+
+<section class="home-slider" id="home">
+    <div class="swiper-container homeslider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url('images/home/bg-home3-1.jpg');background-size: cover;background-position: center;height:auto;">
+                <div class="bg-overlay"></div>
+                <div class="container" >
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="text-center text-white">
+                                <p style="font-size:2.5rem">@languageContainer.Keys["WhoWeAre"]</p>
+                                <p class="home-desc pt-3">
+                                   @languageContainer.Keys["HomeMessage"]
+                                </p>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </div>
+                <!--end container-->
+            </div>
+            <!--end swiper-slide-->
+
+            <div class="swiper-slide"
+                 style="background-image: url('images/home/bg-home3-2.jpg');background-size: cover;background-position: bottom;height:auto">
+                <div class="bg-overlay"></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="text-center text-white">
+                              
+                                <p style="font-size: 2.5rem" class="mb-3">@languageContainer.Keys["WhatIsMobile"]</p>
+                                <p class="home-desc pt-3">
+                                    @languageContainer.Keys["HomeMessage2"]
+                                </p>
+
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row--> 
+                </div>
+                <!--end container-->
+            </div>
+            <!--end swiper-slide-->
+             
+            <div class="swiper-slide"
+                 style="background-image: url('images/home/bg-home3-3.jpg');background-size: cover;background-position: top;height:auto;">
+                <div class="bg-overlay"></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="text-center text-white">
+                               
+                                <p style="font-size:2.5rem">@languageContainer.Keys["OurInformation"]</p>
+                                <p class="home-desc pt-3">
+                                    @languageContainer.Keys["HomeMessage3"]
+                                </p>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </div>
+                <!--end container-->
+            </div>
+            <!--end swiper-slide-->
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <!--end homeslider-->
+</section>
+
+    
+@code {
+    [Parameter]
+    public string CultureCode { get; set; }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+            languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(CultureCode));       
+    }
+
+
+
+
+}
